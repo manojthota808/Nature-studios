@@ -302,7 +302,8 @@ class LikeManager {
 
     updateCountUI(id, count) {
         document.querySelectorAll(`[data-id="${id}"] .like-count`).forEach(el => {
-            el.textContent = count > 0 ? count : '';
+            const displayCount = (count || 0) + 400;
+            el.textContent = displayCount > 0 ? displayCount : '';
         });
     }
 
