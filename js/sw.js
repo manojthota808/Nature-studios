@@ -1,9 +1,9 @@
 const CACHE_NAME = 'nature-studios-v1';
 const STATIC_ASSETS = [
-    './',
-    './index.html',
-    './css/styles.css',
-    './js/script.js'
+    '../',
+    '../index.html',
+    '../css/styles.css',
+    './script.js'
 ];
 
 self.addEventListener('install', event => {
@@ -27,7 +27,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     const request = event.request;
     const url = new URL(request.url);
-    
+
     // Handle Image Requests: Cache First, then Network
     if (request.destination === 'image' || url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
         event.respondWith(
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
                 if (cachedResponse) {
                     return cachedResponse;
                 }
-                
+
                 // If not in cache, fetch and cache
                 return fetch(request)
                     .then(response => {
@@ -43,7 +43,7 @@ self.addEventListener('fetch', event => {
                         if (!response || (response.status !== 200 && response.type !== 'opaque')) {
                             return response;
                         }
-                        
+
                         // Clone response to cache it
                         const responseToCache = response.clone();
                         caches.open(CACHE_NAME).then(cache => {
@@ -53,7 +53,7 @@ self.addEventListener('fetch', event => {
                                 console.warn('Failed to cache image:', err);
                             }
                         });
-                        
+
                         return response;
                     })
                     .catch(err => {
@@ -69,7 +69,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(request).then(cachedResponse => {
             const fetchPromise = fetch(request).then(response => {
-                 if (!response || (response.status !== 200 && response.type !== 'opaque')) {
+                if (!response || (response.status !== 200 && response.type !== 'opaque')) {
                     return response;
                 }
                 const responseToCache = response.clone();
