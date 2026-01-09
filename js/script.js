@@ -1,4 +1,4 @@
-// Gallery Data Configuration
+// Gallery Data
 const IMAGES = {
     yeshu: Array.from({ length: 17 }, (_, i) => ({
         id: i + 1,
@@ -42,7 +42,7 @@ const IMAGES = {
 // Application State
 let currentImages = [];
 
-// Initialize content based on URL param
+// Initialize Content
 function initGalleryContent() {
     const params = new URLSearchParams(window.location.search);
     const galleryType = params.get('gallery') || 'yeshu';
@@ -79,10 +79,6 @@ function initGalleryContent() {
     }
 
     // Distribute Images
-    // Slider: Top 5 (or all if less than 5)
-    // Featured: Next 6
-    // Main: Rest
-
     let sliderImgs, featuredImgs, mainImgs;
 
     if (currentImages.length <= 5) {
@@ -90,12 +86,12 @@ function initGalleryContent() {
         featuredImgs = [];
         mainImgs = [];
     } else if (galleryType === 'nature') {
-        // Nature: Allocate images to enable pagination in both sections
+        // Nature Distribution
         sliderImgs = currentImages.slice(0, 5);
-        featuredImgs = currentImages.slice(5, 17); // 12 images (2 pages)
-        mainImgs = currentImages.slice(17); // Remaining images
+        featuredImgs = currentImages.slice(5, 17);
+        mainImgs = currentImages.slice(17);
     } else {
-        // Default (Yeshu): Standard distribution
+        // Default Distribution
         sliderImgs = currentImages.slice(0, 5);
         featuredImgs = currentImages.slice(5, 11);
         mainImgs = currentImages.slice(11);
@@ -147,12 +143,12 @@ function initGalleryContent() {
     }
 }
 
-// Call init before classes load
+// Init
 initGalleryContent();
 
-// --- Existing Classes (Modified) ---
+// Classes
 
-// Slider functionality
+// Nature Slider
 class NatureSlider {
     constructor() {
         this.slides = document.querySelectorAll('.slide');
@@ -386,7 +382,7 @@ class LikeManager {
     }
 }
 
-// Fast smooth scroll function
+// Smooth Scroll
 function smoothScrollTo(target, duration = 600) {
     const start = window.pageYOffset;
     const distance = target - start;
@@ -426,7 +422,7 @@ class NavigationBar {
     }
 
     init() {
-        // Optimized scroll effect with throttling
+        // Scroll Effect
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -514,17 +510,11 @@ class ModalSlider {
     }
 
     init() {
-        // Get all gallery images data (Dynamic from DOM)
-        // Includes slides and grid items
+        // Get Gallery Images
         const allItems = [
             ...document.querySelectorAll('.slide'),
             ...document.querySelectorAll('.gallery-item')
         ];
-
-        // De-duplicate items based on data-id to avoid slider+gallery dupes?
-        // Actually, if an image is in slider AND grid, we might have duplicates in logic, but standard behavior relies on DOM order.
-        // Let's use currentImages source of truth if possible, or just scrape DOM.
-        // Scraper is better for "what is visible".
 
         const seenIds = new Set();
 
@@ -671,11 +661,7 @@ function setupGalleryClicks() {
     });
 }
 
-// Gallery Pagination (Rewritten to handle dynamic content if needed, currently just hiding rows?)
-// Original pagination logic assumed static items. Now we have dynamic items.
-// We can just keep it or remove it if not needed for small galleries.
-// For now let's keep it but re-init it.
-
+// Gallery Pagination
 class GalleryPagination {
     constructor(gallerySelector, paginationSelector, itemsPerPage = 6) {
         this.gallery = document.querySelector(gallerySelector);
