@@ -1,7 +1,162 @@
+// Gallery Data Configuration
+const IMAGES = {
+    yeshu: Array.from({ length: 17 }, (_, i) => ({
+        id: i + 1,
+        src: `images/Yeshu/${i + 1}.jpg`,
+        alt: `Baby Photo ${i + 1}`
+    })),
+    nature: [
+        { id: 'n1', src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', alt: 'Mountain Landscape' },
+        { id: 'n2', src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80', alt: 'Forest Path' },
+        { id: 'n3', src: 'https://images.unsplash.com/photo-1511497584788-876760111969?w=800&q=80', alt: 'Ocean Waves' },
+        { id: 'n4', src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80', alt: 'Sunset Mountains' },
+        { id: 'n5', src: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80', alt: 'Waterfall' },
+        { id: 'n6', src: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&q=80', alt: 'Desert Landscape' },
+        { id: 'n7', src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80', alt: 'Lake Reflection' },
+        { id: 'n8', src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80', alt: 'Ocean Sunset' },
+        { id: 'n9', src: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=80', alt: 'Mountain Peak' },
+        { id: 'n10', src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80', alt: 'Forest Stream' },
+        { id: 'n11', src: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&q=80', alt: 'Misty Forest' },
+        { id: 'n12', src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', alt: 'Mountain Range' },
+        { id: 'n13', src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80', alt: 'Highland Cattle' },
+        { id: 'n14', src: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80', alt: 'Field Sunset' },
+        { id: 'n15', src: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80', alt: 'Dark Forest' },
+        { id: 'n16', src: 'https://images.unsplash.com/photo-1516216628859-9bccecab13ca?w=800&q=80', alt: 'Stone Texture' },
+        { id: 'n17', src: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&q=80', alt: 'Bridge Nature' },
+        { id: 'n18', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&q=80', alt: 'Tree Life' },
+        { id: 'n19', src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80', alt: 'Forest Path Repeat' },
+        { id: 'n20', src: 'https://images.unsplash.com/photo-1511497584788-876760111969?w=800&q=80', alt: 'Ocean Waves Repeat' },
+        { id: 'n21', src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80', alt: 'Sunset Mountains Repeat' },
+        { id: 'n22', src: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80', alt: 'Waterfall Repeat' },
+        { id: 'n23', src: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&q=80', alt: 'Desert Landscape Repeat' },
+        { id: 'n24', src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80', alt: 'Lake Reflection Repeat' },
+        { id: 'n25', src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80', alt: 'Ocean Sunset Repeat' },
+        { id: 'n26', src: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=80', alt: 'Mountain Peak Repeat' },
+        { id: 'n27', src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80', alt: 'Forest Stream Repeat' },
+        { id: 'n28', src: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&q=80', alt: 'Misty Forest Repeat' },
+        { id: 'n29', src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', alt: 'Mountain Range Repeat' },
+        { id: 'n30', src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80', alt: 'Highland Cattle Repeat' }
+    ]
+};
+
+// Application State
+let currentImages = [];
+
+// Initialize content based on URL param
+function initGalleryContent() {
+    const params = new URLSearchParams(window.location.search);
+    const galleryType = params.get('gallery') || 'yeshu';
+
+    // Update Nav Links
+    document.querySelectorAll('.gallery-nav-link').forEach(link => link.classList.remove('active'));
+    const activeLink = document.getElementById(`link-${galleryType}`);
+    if (activeLink) activeLink.classList.add('active');
+
+    // Get Images
+    currentImages = IMAGES[galleryType] || IMAGES.yeshu;
+
+    // Update Gallery Title Color and Text
+    const galleryTitle = document.querySelector('.gallery-title');
+    if (galleryTitle) {
+        if (galleryType === 'yeshu') {
+            galleryTitle.textContent = 'Yeshu Gallery';
+            galleryTitle.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            galleryTitle.style.webkitBackgroundClip = 'text';
+            galleryTitle.style.webkitTextFillColor = 'transparent';
+            galleryTitle.style.backgroundClip = 'text';
+        } else if (galleryType === 'nature') {
+            galleryTitle.textContent = 'Nature Gallery';
+            galleryTitle.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            galleryTitle.style.webkitBackgroundClip = 'text';
+            galleryTitle.style.webkitTextFillColor = 'transparent';
+            galleryTitle.style.backgroundClip = 'text';
+        } else {
+            // Fallback or other future galleries
+            galleryTitle.style.background = 'none';
+            galleryTitle.style.webkitTextFillColor = 'white';
+            galleryTitle.style.color = 'white';
+        }
+    }
+
+    // Distribute Images
+    // Slider: Top 5 (or all if less than 5)
+    // Featured: Next 6
+    // Main: Rest
+
+    let sliderImgs, featuredImgs, mainImgs;
+
+    if (currentImages.length <= 5) {
+        sliderImgs = currentImages;
+        featuredImgs = [];
+        mainImgs = [];
+    } else if (galleryType === 'nature') {
+        // Nature: Allocate images to enable pagination in both sections
+        sliderImgs = currentImages.slice(0, 5);
+        featuredImgs = currentImages.slice(5, 17); // 12 images (2 pages)
+        mainImgs = currentImages.slice(17); // Remaining images
+    } else {
+        // Default (Yeshu): Standard distribution
+        sliderImgs = currentImages.slice(0, 5);
+        featuredImgs = currentImages.slice(5, 11);
+        mainImgs = currentImages.slice(11);
+    }
+
+    // Populate Slider
+    const sliderWrapper = document.getElementById('slider-wrapper');
+    if (sliderWrapper) {
+        sliderWrapper.innerHTML = sliderImgs.map((img, index) => `
+            <div class="slide ${index === 0 ? 'active' : ''}" data-id="${img.id}">
+                <img src="${img.src}" alt="${img.alt}">
+                <div class="slide-content">
+                    <div class="like-btn" data-id="${img.id}">
+                        <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Helper for gallery item
+    const createGalleryItem = (img) => `
+        <div class="gallery-item" data-id="${img.id}">
+            <img src="${img.src}" alt="${img.alt}">
+            <div class="gallery-like-btn" data-id="${img.id}">
+                <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </div>
+        </div>
+    `;
+
+    // Populate Featured
+    const featuredGrid = document.getElementById('featured-gallery-grid');
+    if (featuredGrid) {
+        featuredGrid.innerHTML = featuredImgs.map(createGalleryItem).join('');
+        const section = featuredGrid.closest('.homepage-gallery');
+        if (section) section.style.display = featuredImgs.length ? 'block' : 'none';
+    }
+
+    // Populate Main
+    const mainGrid = document.getElementById('main-gallery-grid');
+    if (mainGrid) {
+        mainGrid.innerHTML = mainImgs.map(createGalleryItem).join('');
+        const section = mainGrid.closest('.gallery-section');
+        if (section) section.style.display = mainImgs.length ? 'block' : 'none';
+    }
+}
+
+// Call init before classes load
+initGalleryContent();
+
+// --- Existing Classes (Modified) ---
+
 // Slider functionality
 class NatureSlider {
     constructor() {
         this.slides = document.querySelectorAll('.slide');
+        if (this.slides.length === 0) return; // Guard clause
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
         this.autoSlideInterval = null;
@@ -17,6 +172,8 @@ class NatureSlider {
 
     createIndicators() {
         const indicatorsContainer = document.querySelector('.slider-indicators');
+        if (!indicatorsContainer) return;
+        indicatorsContainer.innerHTML = ''; // Clear existing
         this.slides.forEach((_, index) => {
             const indicator = document.createElement('div');
             indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
@@ -29,8 +186,8 @@ class NatureSlider {
         const prevBtn = document.querySelector('.slider-nav.prev');
         const nextBtn = document.querySelector('.slider-nav.next');
 
-        prevBtn.addEventListener('click', () => this.prevSlide());
-        nextBtn.addEventListener('click', () => this.nextSlide());
+        if (prevBtn) prevBtn.addEventListener('click', () => this.prevSlide());
+        if (nextBtn) nextBtn.addEventListener('click', () => this.nextSlide());
     }
 
     setupKeyboardNavigation() {
@@ -41,12 +198,15 @@ class NatureSlider {
     }
 
     goToSlide(index) {
+        if (!this.slides[this.currentSlide]) return;
         this.slides[this.currentSlide].classList.remove('active');
-        document.querySelectorAll('.slider-indicators .indicator')[this.currentSlide].classList.remove('active');
+
+        const indicators = document.querySelectorAll('.slider-indicators .indicator');
+        if (indicators[this.currentSlide]) indicators[this.currentSlide].classList.remove('active');
 
         this.currentSlide = index;
-        this.slides[this.currentSlide].classList.add('active');
-        document.querySelectorAll('.slider-indicators .indicator')[this.currentSlide].classList.add('active');
+        if (this.slides[this.currentSlide]) this.slides[this.currentSlide].classList.add('active');
+        if (indicators[this.currentSlide]) indicators[this.currentSlide].classList.add('active');
 
         this.resetAutoSlide();
     }
@@ -139,6 +299,7 @@ class LikeManager {
 
     triggerConfetti() {
         const canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -223,16 +384,6 @@ class LikeManager {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }, 4000);
     }
-
-    getRandomColor() {
-        // Kept for compatibility if used elsewhere, but main confetti uses local colors array for better performance/customization
-        const colors = [
-            '#ff3040', '#ff6b6b', '#ffa500', '#ffd700',
-            '#32cd32', '#00ced1', '#1e90ff', '#9370db',
-            '#ff1493', '#00ff7f', '#ff69b4', '#ff6347'
-        ];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
 }
 
 // Fast smooth scroll function
@@ -293,10 +444,12 @@ class NavigationBar {
         });
 
         // Mobile menu toggle
-        this.hamburger.addEventListener('click', () => {
-            this.hamburger.classList.toggle('active');
-            this.navMenu.classList.toggle('active');
-        });
+        if (this.hamburger) {
+            this.hamburger.addEventListener('click', () => {
+                this.hamburger.classList.toggle('active');
+                this.navMenu.classList.toggle('active');
+            });
+        }
 
         // Fast smooth scroll for navigation links
         this.navLinks.forEach(link => {
@@ -315,14 +468,14 @@ class NavigationBar {
                 link.classList.add('active');
 
                 // Close mobile menu
-                this.hamburger.classList.remove('active');
-                this.navMenu.classList.remove('active');
+                if (this.hamburger) this.hamburger.classList.remove('active');
+                if (this.navMenu) this.navMenu.classList.remove('active');
             });
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!this.navbar.contains(e.target) && this.navMenu.classList.contains('active')) {
+            if (this.navbar && !this.navbar.contains(e.target) && this.navMenu.classList.contains('active')) {
                 this.hamburger.classList.remove('active');
                 this.navMenu.classList.remove('active');
             }
@@ -361,10 +514,28 @@ class ModalSlider {
     }
 
     init() {
-        // Get all gallery images data (from both homepage and gallery sections)
-        document.querySelectorAll('.gallery-item').forEach(item => {
+        // Get all gallery images data (Dynamic from DOM)
+        // Includes slides and grid items
+        const allItems = [
+            ...document.querySelectorAll('.slide'),
+            ...document.querySelectorAll('.gallery-item')
+        ];
+
+        // De-duplicate items based on data-id to avoid slider+gallery dupes?
+        // Actually, if an image is in slider AND grid, we might have duplicates in logic, but standard behavior relies on DOM order.
+        // Let's use currentImages source of truth if possible, or just scrape DOM.
+        // Scraper is better for "what is visible".
+
+        const seenIds = new Set();
+
+        allItems.forEach(item => {
             const id = item.getAttribute('data-id');
+            if (seenIds.has(id)) return;
+            seenIds.add(id);
+
             const img = item.querySelector('img');
+            if (!img) return;
+
             // Get high resolution image
             let highResSrc = img.src;
             if (highResSrc.includes('w=800')) {
@@ -384,20 +555,22 @@ class ModalSlider {
         const modalNext = document.querySelector('.modal-nav.next');
         const modalClose = document.querySelector('.modal-close');
 
-        modalPrev.addEventListener('click', () => this.prevSlide());
-        modalNext.addEventListener('click', () => this.nextSlide());
-        modalClose.addEventListener('click', () => this.closeModal());
+        if (modalPrev) modalPrev.addEventListener('click', () => this.prevSlide());
+        if (modalNext) modalNext.addEventListener('click', () => this.nextSlide());
+        if (modalClose) modalClose.addEventListener('click', () => this.closeModal());
 
         // Close on overlay click
-        this.modalOverlay.addEventListener('click', (e) => {
-            if (e.target === this.modalOverlay) {
-                this.closeModal();
-            }
-        });
+        if (this.modalOverlay) {
+            this.modalOverlay.addEventListener('click', (e) => {
+                if (e.target === this.modalOverlay) {
+                    this.closeModal();
+                }
+            });
+        }
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (this.modalOverlay.classList.contains('active')) {
+            if (this.modalOverlay && this.modalOverlay.classList.contains('active')) {
                 if (e.key === 'Escape') this.closeModal();
                 if (e.key === 'ArrowLeft') this.prevSlide();
                 if (e.key === 'ArrowRight') this.nextSlide();
@@ -408,13 +581,15 @@ class ModalSlider {
         this.createModalIndicators();
 
         // Setup modal like button
-        this.modalLikeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const id = this.modalLikeBtn.getAttribute('data-id');
-            if (window.likeManager) {
-                window.likeManager.toggleLike(id, this.modalLikeBtn);
-            }
-        });
+        if (this.modalLikeBtn) {
+            this.modalLikeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = this.modalLikeBtn.getAttribute('data-id');
+                if (window.likeManager) {
+                    window.likeManager.toggleLike(id, this.modalLikeBtn);
+                }
+            });
+        }
     }
 
     openModal(index) {
@@ -431,6 +606,8 @@ class ModalSlider {
 
     updateModalSlide() {
         const item = this.galleryItems[this.currentModalIndex];
+        if (!item) return;
+
         const img = this.modalSlide.querySelector('img');
         img.src = item.src;
         img.alt = item.alt;
@@ -461,6 +638,9 @@ class ModalSlider {
 
     createModalIndicators() {
         const indicatorsContainer = document.querySelector('.modal-indicators');
+        if (!indicatorsContainer) return;
+        indicatorsContainer.innerHTML = '';
+
         this.galleryItems.forEach((_, index) => {
             const indicator = document.createElement('div');
             indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
@@ -473,7 +653,7 @@ class ModalSlider {
     }
 }
 
-// Gallery item click to open modal (works for both homepage and gallery sections)
+// Gallery item click to open modal
 function setupGalleryClicks() {
     document.querySelectorAll('.gallery-item').forEach((item) => {
         item.addEventListener('click', (e) => {
@@ -491,11 +671,17 @@ function setupGalleryClicks() {
     });
 }
 
-// Gallery Pagination
+// Gallery Pagination (Rewritten to handle dynamic content if needed, currently just hiding rows?)
+// Original pagination logic assumed static items. Now we have dynamic items.
+// We can just keep it or remove it if not needed for small galleries.
+// For now let's keep it but re-init it.
+
 class GalleryPagination {
     constructor(gallerySelector, paginationSelector, itemsPerPage = 6) {
         this.gallery = document.querySelector(gallerySelector);
         this.pagination = document.querySelector(paginationSelector);
+        if (!this.gallery || !this.pagination) return;
+
         this.items = Array.from(this.gallery.querySelectorAll('.gallery-item'));
         this.itemsPerPage = itemsPerPage;
         this.currentPage = 1;
@@ -513,8 +699,8 @@ class GalleryPagination {
         const prevBtn = this.pagination.querySelector('.prev-page');
         const nextBtn = this.pagination.querySelector('.next-page');
 
-        prevBtn.addEventListener('click', () => this.prevPage());
-        nextBtn.addEventListener('click', () => this.nextPage());
+        if (prevBtn) prevBtn.addEventListener('click', () => this.prevPage());
+        if (nextBtn) nextBtn.addEventListener('click', () => this.nextPage());
     }
 
     showPage(page) {
@@ -533,13 +719,6 @@ class GalleryPagination {
 
         this.updatePaginationButtons();
         this.renderPagination();
-
-        // Smooth scroll to gallery section top
-        const gallerySection = this.gallery.closest('section');
-        if (gallerySection) {
-            const offsetTop = gallerySection.offsetTop - 80;
-            smoothScrollTo(offsetTop, 400);
-        }
     }
 
     prevPage() {
@@ -558,12 +737,13 @@ class GalleryPagination {
         const prevBtn = this.pagination.querySelector('.prev-page');
         const nextBtn = this.pagination.querySelector('.next-page');
 
-        prevBtn.disabled = this.currentPage === 1;
-        nextBtn.disabled = this.currentPage === this.totalPages;
+        if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+        if (nextBtn) nextBtn.disabled = this.currentPage === this.totalPages;
     }
 
     renderPagination() {
         const numbersContainer = this.pagination.querySelector('.pagination-numbers');
+        if (!numbersContainer) return;
         numbersContainer.innerHTML = '';
 
         if (this.totalPages <= 1) {
@@ -627,17 +807,22 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGalleryClicks();
 
     // Initialize pagination for both galleries
-    window.featuredGalleryPagination = new GalleryPagination('.homepage-gallery .gallery-grid', '.homepage-gallery .pagination', 6);
-    window.natureGalleryPagination = new GalleryPagination('.gallery-section .gallery-grid', '.gallery-section .pagination', 6);
+    // We check if grids have items first
+    if (document.querySelector('.homepage-gallery .gallery-grid')) {
+        window.featuredGalleryPagination = new GalleryPagination('.homepage-gallery .gallery-grid', '.homepage-gallery .pagination', 6);
+    }
+    if (document.querySelector('.gallery-section .gallery-grid')) {
+        window.natureGalleryPagination = new GalleryPagination('.gallery-section .gallery-grid', '.gallery-section .pagination', 6);
+    }
 
     // Update LikeManager to handle modal like buttons
     const originalSyncLikeState = window.likeManager.syncLikeState.bind(window.likeManager);
     window.likeManager.syncLikeState = function (id) {
         originalSyncLikeState(id);
         // Also update modal like button if modal is open
-        if (window.modalSlider && window.modalSlider.modalOverlay.classList.contains('active')) {
+        if (window.modalSlider && window.modalSlider.modalOverlay && window.modalSlider.modalOverlay.classList.contains('active')) {
             const modalBtn = window.modalSlider.modalLikeBtn;
-            if (modalBtn.getAttribute('data-id') === id) {
+            if (modalBtn && modalBtn.getAttribute('data-id') === id) {
                 if (this.likedItems.has(id)) {
                     modalBtn.classList.add('liked');
                 } else {
@@ -653,8 +838,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
             const canvas = document.getElementById('confetti-canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
         }, 100);
     });
 });
