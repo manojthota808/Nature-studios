@@ -46,7 +46,7 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 60px;
 }
 
 @media (max-width: 768px) {
@@ -119,13 +119,13 @@ html {
 .nav-link {
     color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 500;
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: 1.5px;
     text-transform: capitalize;
-    padding: 8px 0;
+    padding: 6px 0;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -206,7 +206,7 @@ html {
 
 /* About Section */
 .about-section {
-    padding: 80px 20px;
+    padding: 40px 20px 80px;
     background: #000000;
     display: flex;
     align-items: center;
@@ -406,6 +406,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #000;
 }
 
 .slide.active {
@@ -418,6 +419,20 @@ html {
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: scale(1.1);
+    transition: transform 6s ease;
+}
+
+.slide.active img {
+    transform: scale(1);
+}
+
+@media (max-width: 768px) {
+    .slide img {
+        object-fit: contain;
+        object-position: center;
+        background: #000;
+    }
 }
 
 .slide-content {
@@ -570,7 +585,7 @@ html {
 
 /* Gallery Section */
 .gallery-section {
-    padding: 80px 20px;
+    padding: 40px 20px 80px;
     background: #000000;
 }
 
@@ -591,9 +606,21 @@ html {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     padding: 20px 0;
+}
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .gallery-item {
@@ -971,8 +998,10 @@ html {
     }
 
     .about-stats {
-        flex-direction: column;
-        gap: 30px;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: space-around;
+        flex-wrap: wrap;
     }
 
     .modal-container {
@@ -1261,18 +1290,7 @@ html {
         gap: 20px;
     }
 
-    .gallery-nav {
-        flex-wrap: wrap;
-        width: 100%;
-        gap: 10px;
-    }
 
-    .gallery-nav-link {
-        font-size: 1rem;
-        flex: 1;
-        text-align: center;
-        white-space: nowrap;
-    }
 
     .pagination {
         gap: 10px;
@@ -1301,18 +1319,18 @@ html {
 .gallery-nav {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .gallery-nav-link {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
     text-transform: capitalize;
     letter-spacing: 1.5px;
     transition: all 0.3s ease;
-    padding: 5px 10px;
+    padding: 6px 10px;
     border-radius: 4px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
@@ -1356,21 +1374,26 @@ html {
     font-weight: 300;
 }
 
-/* Island Navigation Styles for Desktop (Links Only Background) */
-@media (min-width: 769px) {
+/* Island Navigation Styles (Global for Gallery Nav) */
+.gallery-nav {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 8px 25px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .nav-menu,
-    .gallery-nav {
+/* Island Navigation Styles for Desktop (Menu Only) */
+@media (min-width: 769px) {
+    .nav-menu {
         background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        padding: 10px 30px;
+        padding: 8px 25px;
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .gallery-nav {
-        padding: 10px 25px;
     }
 }
