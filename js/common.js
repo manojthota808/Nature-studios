@@ -222,7 +222,7 @@ class LikeManager {
         const x = (inputX - window.scrollX) / window.innerWidth;
         const y = (inputY - window.scrollY) / window.innerHeight;
 
-        const colors = ['#FF4081', '#2196F3', '#FF5252', '#E040FB', '#7C4DFF'];
+        const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
 
         // Option 2 Style: "Blast" / Cannon
         // A single burst with high spread
