@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://naturestudios.us/sitemap.xml
